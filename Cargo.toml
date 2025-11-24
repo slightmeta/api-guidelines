@@ -2,5 +2,12 @@
 name = "api-guidelines"
 version = "0.1.0"
 edition = "2024"
+authors = ["weilz"]
+description = "Rust API guidelines enums and utilities for code quality and best practices"
+license = "MIT"
+repository = "https://github.com/slightmeta/api-guidelines"
+documentation = "https://docs.rs/api-guidelines"
+readme = "README.md"
+keywords = ["api", "guidelines", "rust", "best-practices", "code-quality"]
+categories = ["development-tools", "rust-patterns"]
 
-[dependencies]
