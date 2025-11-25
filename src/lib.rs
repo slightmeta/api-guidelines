@@ -1,16 +1,37 @@
 //! # API Guidelines
 //!
-//! A Rust library providing structured enums and utilities for the official Rust API Guidelines.
+//! A comprehensive Rust library providing structured enums and utilities for implementing and referencing the official Rust API Guidelines.
 //!
-//! This crate implements the Rust API Guidelines as structured enums, making it easier to:
-//! - Reference specific guidelines in code
-//! - Build linting tools  
-//! - Document API design decisions
-//! - Ensure code quality and consistency
+//! This crate systematically organizes the [Rust API Guidelines](https://rust-lang.github.io/api-guidelines/) into structured enums, making it easier to:
+//! - Reference specific guidelines in code documentation
+//! - Build linting tools and static analyzers
+//! - Document API design decisions with precise guideline references
+//! - Ensure code quality and consistency across Rust projects
+//! - Generate guideline compliance reports
 //!
-//! ## Example
-//! ```
-//! use api_guidelines::{Naming, Interoperability};
+//! ## Author
+//!
+//! This crate is developed and maintained by [slightmeta](https://github.com/slightmeta).
+//!
+//! ## Categories
+//!
+//! The guidelines are organized into the following categories:
+//! - **Naming**: Conventions for naming types, methods, and conversions
+//! - **Interoperability**: Traits, conversions, and standard library integration
+//! - **Predictability**: Consistent behavior and intuitive APIs
+//! - **Flexibility**: Generic programming and trait design
+//! - **Type Safety**: Strong typing and compile-time guarantees
+//! - **Dependability**: Error handling and reliability
+//! - **Debuggability**: Debug implementations and diagnostics
+//! - **Future Proofing**: API evolution and compatibility
+//! - **Necessities**: Licensing and stability requirements
+//! - **Documentation**: Documentation standards and examples
+//! - **Macros**: Macro design and implementation guidelines
+//!
+//! ## Usage
+//!
+//! ```rust
+//! use api_guidelines::{Naming, Interoperability, Predictability};
 //!
 //! // Reference naming conventions
 //! let naming_convention = Naming::C_CASE;
@@ -19,9 +40,28 @@
 //! // Reference interoperability guidelines
 //! let common_traits = Interoperability::C_COMMON_TRAITS;
 //! let conversion_traits = Interoperability::C_CONV_TRAITS;
+//!
+//! // Reference predictability guidelines
+//! let smart_ptr_guideline = Predictability::C_SMART_PTR;
+//! let constructor_guideline = Predictability::C_CTOR;
 //! ```
 //!
-//! Based on the official [Rust API Guidelines](https://rust-lang.github.io/api-guidelines/).
+//! ## Features
+//!
+//! - **Comprehensive Coverage**: All official Rust API Guidelines are represented
+//! - **Structured Organization**: Guidelines are logically grouped by category
+//! - **Rich Documentation**: Each enum variant includes detailed documentation with examples
+//! - **Easy Integration**: Simple enum-based API for easy reference in code
+//! - **Tooling Support**: Designed to support linting tools and static analysis
+//!
+//! ## Example Use Cases
+//!
+//! - **Linting Tools**: Build custom lints that reference specific guidelines
+//! - **Code Review**: Reference guidelines in code review comments
+//! - **Documentation**: Link to specific guidelines in API documentation
+//! - **Learning**: Study Rust API design patterns systematically
+//!
+//! This crate is based on the official [Rust API Guidelines](https://rust-lang.github.io/api-guidelines/).
 
 #![allow(non_camel_case_types)]
 
@@ -30,7 +70,89 @@
 pub enum Naming {
     /// In general, Rust tends to use UpperCamelCase for "type-level" constructs (types and traits) and snake_case for "value-level" constructs.
     ///
+    /// <table>
+    ///   <thead>
+    ///     <tr>
+    ///       <th>Item</th>
+    ///       <th>Convention</th>
+    ///     </tr>
+    ///   </thead>
+    ///   <tbody>
+    ///     <tr>
+    ///       <td><code>Crates</code></td>
+    ///       <td><a href="https://github.com/rust-lang/api-guidelines/issues/101">unclear</a></td>
+    ///     </tr>
+    ///     <tr>
+    ///       <td><code>Modules</code></td>
+    ///       <td>snake_case</td>
+    ///     </tr>
+    ///     <tr>
+    ///       <td><code>Crates</code></td>
+    ///       <td><code>unclear</code></td>
+    ///     </tr>
+    ///     <tr>
+    ///       <td><code>Types</code></td>
+    ///       <td><code>UpperCamelCase</code></td>
+    ///     </tr>
+    ///     <tr>
+    ///       <td><code>Traits</code></td>
+    ///       <td><code>UpperCamelCase</code></td>
+    ///     </tr>
+    ///     <tr>
+    ///       <td><code>Enum variants</code></td>
+    ///       <td><code>UpperCamelCase</code></td>
+    ///     </tr>
+    ///     <tr>
+    ///       <td><code>Functions</code></td>
+    ///       <td><code>snake_case</code></td>
+    ///     </tr>
+    ///     <tr>
+    ///       <td><code>Methods</code></td>
+    ///       <td><code>snake_case</code></td>
+    ///     </tr>
+    ///     <tr>
+    ///       <td><code>General constructors</code></td>
+    ///       <td><code>new or with_more_details</code></td>
+    ///     </tr>
+    ///     <tr>
+    ///       <td><code>Conversion constructors</code></td>
+    ///       <td><code>from_some_other_type</code></td>
+    ///     </tr>
+    ///     <tr>
+    ///       <td><code>Macros</code></td>
+    ///       <td><code>snake_case!</code></td>
+    ///     </tr>
+    ///     <tr>
+    ///       <td><code>Local variables</code></td>
+    ///       <td><code>snake_case</code></td>
+    ///     </tr>
+    ///     <tr>
+    ///       <td><code>Statics</code></td>
+    ///       <td><code>SCREAMING_SNAKE_CASE</code></td>
+    ///     </tr>
+    ///     <tr>
+    ///       <td><code>Constants</code></td>
+    ///       <td><code>SCREAMING_SNAKE_CASE</code></td>
+    ///     </tr>
+    ///     <tr>
+    ///       <td><code>Type parameters</code></td>
+    ///       <td><code>concise UpperCamelCase, usually single uppercase letter: T</code></td>
+    ///     </tr>
+    ///     <tr>
+    ///       <td><code>Lifetimes</code></td>
+    ///       <td><code>short lowercase, usually a single letter: 'a, 'de, 'src</code></td>
+    ///     </tr>
+    ///     <tr>
+    ///       <td><code>Features</code></td>
+    ///       <td><code><a href="https://github.com/rust-lang/api-guidelines/issues/101">unclear</a> but see <a href="https://rust-lang.github.io/api-guidelines/naming.html#c-feature">C-FEATURE</a></code></td>
+    ///     </tr>
+    ///   </tbody>
+    /// </table>
     /// In UpperCamelCase, acronyms and contractions of compound words count as one word: use Uuid rather than UUID, Usize rather than USize or Stdin rather than StdIn. In snake_case, acronyms and contractions are lower-cased: is_xid_start.
+    ///
+    /// In snake_case or SCREAMING_SNAKE_CASE, a "word" should never consist of a single letter unless it is the last "word". So, we have btree_map rather than b_tree_map, but PI_2 rather than PI2.
+    ///
+    /// Crate names should not use -rs or -rust as a suffix or prefix. Every crate is Rust! It serves no purpose to remind users of this constantly.
     ///
     /// [ Casing conforms to RFC 430 ](https://rust-lang.github.io/api-guidelines/naming.html)
     C_CASE,
@@ -80,9 +202,19 @@ pub enum Naming {
     ///
     /// Conversions prefixed as_ and into_ typically decrease abstraction, either exposing a view into the underlying representation (as) or deconstructing data into its underlying representation (into). Conversions prefixed to_, on the other hand, typically stay at the same level of abstraction but do some work to change from one representation to another.
     ///
-    /// When a type wraps a single value to associate it with higher-level semantics, access to the wrapped value should be provided by an into_inner() method. This applies to wrappers that provide buffering like BufReader, encoding or decoding like GzDecoder, atomic access like AtomicBool, or any similar semantics.
+    /// When a type wraps a single value to associate it with higher-level semantics, access to the wrapped value should be provided by an into_inner() method. This applies to wrappers that provide buffering like [ BufReader ](https://doc.rust-lang.org/std/io/struct.BufReader.html#method.into_inner), encoding or decoding like [ GzDecoder ](https://docs.rs/flate2/0.2.19/flate2/read/struct.GzDecoder.html#method.into_inner), atomic access like [ AtomicBool ](https://doc.rust-lang.org/std/sync/atomic/struct.AtomicBool.html#method.into_inner), or any similar semantics.
     ///
-    /// If the mut qualifier in the name of a conversion method constitutes part of the return type, it should appear as it would appear in the type. For example Vec::as_mut_slice returns a mut slice; it does what it says. This name is preferred over as_slice_mut.
+    /// If the mut qualifier in the name of a conversion method constitutes part of the return type, it should appear as it would appear in the type. For example [Vec::as_mut_slice](https://doc.rust-lang.org/std/vec/struct.Vec.html#method.as_mut_slice) returns a mut slice; it does what it says. This name is preferred over as_slice_mut.
+    /// ```
+    /// // Return type is a mut slice.
+    /// fn as_mut_slice(&mut self) -> &mut [T];
+    /// ```
+    /// More examples from the standard library
+    ///
+    /// + [Result::as_ref](https://doc.rust-lang.org/std/result/enum.Result.html#method.as_ref)
+    /// + [RefCell::as_ptr](https://doc.rust-lang.org/std/cell/struct.RefCell.html#method.as_ptr)
+    /// + [slice::to_vec](https://doc.rust-lang.org/std/primitive.slice.html#method.to_vec)
+    /// + [Option::into_iter](https://doc.rust-lang.org/std/option/enum.Option.html#method.into_iter)
     ///
     /// [Ad-hoc conversions follow as_, to_, into_ conventions](https://rust-lang.github.io/api-guidelines/naming.html#ad-hoc-conversions-follow-as_-to_-into_-conventions-c-conv)
     C_CONV,
@@ -90,11 +222,44 @@ pub enum Naming {
     ///
     /// The get naming is used only when there is a single and obvious thing that could reasonably be gotten by a getter. For example [Cell::get](https://doc.rust-lang.org/std/cell/struct.Cell.html#method.get) accesses the content of a Cell.
     ///
+    /// For getters that do runtime validation such as bounds checking, consider adding unsafe _unchecked variants. Typically those will have the following signatures.
+    /// ```
+    /// fn get(&self, index: K) -> Option<&V>;
+    /// fn get_mut(&mut self, index: K) -> Option<&mut V>;
+    /// unsafe fn get_unchecked(&self, index: K) -> &V;
+    /// unsafe fn get_unchecked_mut(&mut self, index: K) -> &mut V;
+    /// ```
+    /// The difference between getters and conversions ([C-CONV](https://rust-lang.github.io/api-guidelines/naming.html#c-conv)) can be subtle and is not always clear-cut. For example [TempDir::path](https://docs.rs/tempdir/0.3.5/tempdir/struct.TempDir.html#method.path) can be understood as a getter for the filesystem path of the temporary directory, while [TempDir::into_path](https://docs.rs/tempdir/0.3.5/tempdir/struct.TempDir.html#method.into_path) is a conversion that transfers responsibility for deleting the temporary directory to the caller. Since path is a getter, it would not be correct to call it get_path or as_path.
+    ///
+    /// Examples from the standard library
+    ///
+    /// + [std::io::Cursor::get_mut](https://doc.rust-lang.org/std/io/struct.Cursor.html#method.get_mut)
+    /// + [std::pin::Pin::get_mut](https://doc.rust-lang.org/std/pin/struct.Pin.html#method.get_mut)
+    /// + [std::sync::PoisonError::get_mut](https://doc.rust-lang.org/std/sync/struct.PoisonError.html#method.get_mut)
+    /// + [std::sync::atomic::AtomicBool::get_mut](https://doc.rust-lang.org/std/sync/atomic/struct.AtomicBool.html#method.get_mut)
+    /// + [std::collections::hash_map::OccupiedEntry::get_mut](https://doc.rust-lang.org/std/collections/hash_map/struct.OccupiedEntry.html#method.get_mut)
+    /// + [<\[T\]>::get_unchecked](https://doc.rust-lang.org/std/primitive.slice.html#method.get_unchecked)
+    ///
     /// [Getter names follow Rust convention (C-GETTER)](https://rust-lang.github.io/api-guidelines/naming.html#getter-names-follow-rust-convention-c-getter)
     C_GETTER,
+    /// Per [RFC 199](https://github.com/rust-lang/rfcs/blob/master/text/0199-ownership-variants.md).
+    ///
+    /// For a container with elements of type U, iterator methods should be named:
+    /// ```
+    /// fn iter(&self) -> Iter             // Iter implements Iterator<Item = &U>
+    /// fn iter_mut(&mut self) -> IterMut  // IterMut implements Iterator<Item = &mut U>
+    /// fn into_iter(self) -> IntoIter     // IntoIter implements Iterator<Item = U>
+    /// ```
     /// This guideline applies to data structures that are conceptually homogeneous collections. As a counterexample, the str type is slice of bytes that are guaranteed to be valid UTF-8. This is conceptually more nuanced than a homogeneous collection so rather than providing the iter/iter_mut/into_iter group of iterator methods, it provides [str::bytes](https://doc.rust-lang.org/std/primitive.str.html#method.bytes) to iterate as bytes and [str::chars](https://doc.rust-lang.org/std/primitive.str.html#method.chars) to iterate as chars.
     ///
     /// This guideline applies to methods only, not functions. For example [percent_encode](https://docs.rs/url/1.4.0/url/percent_encoding/fn.percent_encode.html) from the url crate returns an iterator over percent-encoded string fragments. There would be no clarity to be had by using an iter/iter_mut/into_iter convention.
+    ///
+    /// Examples from the standard library
+    /// + [Vec::iter](https://doc.rust-lang.org/std/vec/struct.Vec.html#method.iter)
+    /// + [Vec::iter_mut](https://doc.rust-lang.org/std/vec/struct.Vec.html#method.iter_mut)
+    /// + [Vec::into_iter](https://doc.rust-lang.org/std/vec/struct.Vec.html#method.into_iter)
+    /// + [BTreeMap::iter](https://doc.rust-lang.org/std/collections/struct.BTreeMap.html#method.iter)
+    /// + [BTreeMap::iter_mut](https://doc.rust-lang.org/std/collections/struct.BTreeMap.html#method.iter_mut)
     ///
     /// [Methods on collections that produce iterators follow iter, iter_mut, into_iter (C-ITER)](https://rust-lang.github.io/api-guidelines/naming.html#methods-on-collections-that-produce-iterators-follow-iter-iter_mut-into_iter-c-iter)
     C_ITER,
@@ -112,6 +277,8 @@ pub enum Naming {
     ///
     C_FEATURE,
     /// All of these use verb-object-error word order. If we were adding an error to represent an address failing to parse, for consistency we would want to name it in verb-object-error order like ParseAddrError rather than AddrParseError.
+    ///
+    /// The particular choice of word order is not important, but pay attention to consistency within the crate and consistency with similar functionality in the standard library.
     ///
     /// [Names use a consistent word order (C-WORD-ORDER)](https://rust-lang.github.io/api-guidelines/naming.html#names-use-a-consistent-word-order-c-word-order)
     C_WORD_ORDER,
